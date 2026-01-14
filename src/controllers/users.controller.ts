@@ -6,7 +6,6 @@ type User = {
     nome: string;
     email: string
 }
-
 // let id = 0
 
 //let usuarios: User[] = []
