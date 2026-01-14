@@ -12,20 +12,28 @@ type User = {
 
 export class UserController {
     static async getAll(req: Request, res: Response) {
-        const snapshot = await getFirestore().collection("users").get()
-        const users = snapshot.docs.map(doc => {
-            return {
-                id: doc.id,
-                ...doc.data()
-            }
-        })
-        res.send(users)
+        try {
+            const snapshot = await getFirestore().collection("users").get()
+            const users = snapshot.docs.map(doc => {
+                
+                return {
+                    id: doc.id,
+                    ...doc.data()
+                }
+            })
+            res.send(users)
+        } catch (error) {
+            res.status(500).send({
+                message: "Erro do Servidor!"
+            })
+        }
     }
 
     static async getById(req: Request, res: Response) {
         let userId = req.params.id
         const doc = await getFirestore().collection("users").doc(userId).get()
         //let user = usuarios.find(user => user.id === userId)
+
         res.send({
             id: doc.id,
             ...doc.data()
