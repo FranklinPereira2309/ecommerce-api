@@ -7,6 +7,8 @@ export class ErrorBase extends Error {
     }
 
     send(res: Response) {
-        res.status(this.status).send(this.message)
+        res.status(this.status).send({
+            message: this.message
+        })
     }
 }
